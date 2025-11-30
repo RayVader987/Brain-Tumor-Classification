@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5C11.716 5 5 11.716 5 20s6.716 15 15 15 15-6.716 15-15S28.284 5 20 5z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M20 12v16M12 20h16" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <h1>Brain Tumor Classifier</h1>
+                </div>
+                <p class="subtitle">AI-Powered MRI Analysis</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="upload-section">
+                <div class="upload-card">
+                    <h2>Upload MRI Scan</h2>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                        <div class="upload-placeholder" id="uploadPlaceholder">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                                <path d="M32 8v48M8 32h48" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                            <p>Click or drag image here</p>
+                            <span>JPG, PNG (Max 5MB)</span>
+                        </div>
+                        <div class="image-preview" id="imagePreview" style="display:none;">
+                            <img id="previewImg" alt="Preview">
+                            <button class="remove-btn" id="removeBtn">×</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="model-selection">
+                    <label for="modelSelect">Select Model</label>
+                    <select id="modelSelect">
+                        <option value="ensemble">🏆 Ensemble (Best)</option>
+                        <option value="resnet50">ResNet50</option>
+                        <option value="vgg16">VGG16</option>
+                        <option value="custom_cnn">Custom CNN</option>
+                        <option value="svm">SVM</option>
+                        <option value="rf">Random Forest</option>
+                    </select>
+                </div>
+
+                <button class="predict-btn" id="predictBtn" disabled>
+                    <span id="btnText">Analyze Scan</span>
+                    <div class="spinner" id="spinner" style="display:none;"></div>
+                </button>
+            </section>
+
+            <section class="results-section" id="resultsSection" style="display:none;">
+                <div class="results-header">
+                    <h2>Results</h2>
+                    <span class="model-badge" id="modelBadge"></span>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>Diagnosis</h3>
+                        <div class="prediction-badge" id="predictionBadge">
+                            <span class="prediction-label" id="predictionLabel"></span>
+                            <span class="confidence-text" id="confidenceText"></span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>Probabilities</h3>
+                        <canvas id="probabilityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="image-comparison">
+                    <div class="comparison-item">
+                        <h4>Original</h4>
+                        <img id="originalImg" alt="Original">
+                    </div>
+                    <div class="comparison-arrow">→</div>
+                    <div class="comparison-item">
+                        <h4>Result</h4>
+                        <div class="result-display" id="resultDisplay"></div>
+                    </div>
+                </div>
+
+                <div class="disclaimer">
+                    <strong>⚕️ Disclaimer:</strong> For research only. Consult medical professionals.
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Powered by TensorFlow & Flask | 5 Models | 4 Classes</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+venv/ 
+models/ 
+__pycache__/ 
+*.pyc 
+*.pyd 
+*.h5 
+*.pkl 
+*.zip 
+*.lib 
+.DS_Store
